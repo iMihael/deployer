@@ -1,0 +1,28 @@
+{
+  "name": "deployer-front",
+  "version": "0.0.0",
+  "authors": [
+    "Mikhail Bolsunovskiy <bolsunovskiy.mikhail@techs.com.ua>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-bootstrap": "~0.13.4",
+    "angular-loading-bar": "~0.8.0",
+    "angular-resource": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "jquery": "~2.1.4"
+  }
+}
