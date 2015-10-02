@@ -1,3 +1,7 @@
-angular.module('main').controller('projectList',  ['$scope', function($scope){
-    console.log($scope);
+angular.module('main').controller('projectList',  ['$scope', 'project', function($scope, project){
+
+    project.query({}, {}, function(data){
+        $scope.projects = data;
+    });
+
 }]);

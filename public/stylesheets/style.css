@@ -6,3 +6,12 @@ body {
 a {
   /*color: #00B7FF;*/
 }
+
+.help-block-error {
+  font-size: 12px;
+  font-weight: normal;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #b23f36;
+}

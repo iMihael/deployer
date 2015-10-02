@@ -23,6 +23,7 @@
     "angular-loading-bar": "~0.8.0",
     "angular-resource": "~1.4.7",
     "angular-route": "~1.4.7",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "angular-growl-v2": "~0.7.5"
   }
 }

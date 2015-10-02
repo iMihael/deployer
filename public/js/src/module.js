@@ -1,8 +1,14 @@
 angular.module('app', [
     'ngRoute',
     'angular-loading-bar',
+    'angular-growl',
     'main'
-]).config(['$routeProvider', function($routeProvider){
+]).config(['$routeProvider', 'growlProvider', function($routeProvider, growlProvider){
+
+    growlProvider.globalPosition('top-left');
+    growlProvider.globalTimeToLive(4000);
+    growlProvider.globalDisableCountDown(true);
+
     $routeProvider
         .otherwise({
             redirectTo: '/'

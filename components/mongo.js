@@ -18,12 +18,12 @@ var ret = {
             }
         });
     },
-    addProject: function(name, callback) {
-        db.collection('projects').insertOne({
-            name: name
-        }, function(err, result){
+    addProject: function(project, callback) {
+        db.collection('projects').insertOne(project, function(err, result){
             if(!err) {
-                callback(result);
+                if(callback) {
+                    callback(result);
+                }
             }
         });
     }

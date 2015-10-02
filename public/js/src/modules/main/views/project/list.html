@@ -2,3 +2,30 @@
 <p>
     <a class="btn btn-primary" href="#/projects/create">Create Project</a>
 </p>
+
+<table class="table table-bordered" ng-if="projects">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="row in projects">
+            <td>
+                {{ row.name }}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
