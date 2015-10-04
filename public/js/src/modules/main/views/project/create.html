@@ -1,4 +1,4 @@
-<div class="panel panel-default col-lg-4 col-lg-offset-4">
+<div class="panel panel-default col-lg-6 col-lg-offset-3">
     <div class="panel-heading">
         <h2>Create Project</h2>
     </div>
@@ -11,15 +11,45 @@
             </div>
 
             <div class="form-group">
-                <label>Git repository</label>
+                <label>Git repository (SSH only)</label>
                 <input type="text" class="form-control" ng-model="project.git_remote" name="git_remote" ng-required="true" />
                 <div class="help-block-error" ng-show="submitted && form.git_remote.$error.required" >Git repository is required.</div>
             </div>
 
+            <!--<div class="form-group">-->
+                <!--<label>Git branch</label>-->
+                <!--<input type="text" class="form-control" name="git_branch" ng-model="project.git_branch" ng-required="true" />-->
+                <!--<div class="help-block-error" ng-show="submitted && form.git_branch.$error.required" >Git branch is required.</div>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label>Remote SSH host</label>-->
+                <!--<input type="text" class="form-control" name="remote_host" ng-model="project.remote_host" ng-required="true" />-->
+                <!--<div class="help-block-error" ng-show="submitted && form.remote_host.$error.required" >Remote host is required.</div>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label>Remote SSH user</label>-->
+                <!--<input type="text" class="form-control" name="remote_user" ng-model="project.remote_user" ng-required="true" />-->
+                <!--<div class="help-block-error" ng-show="submitted && form.remote_user.$error.required" >Remote user is required.</div>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label>Remote path</label>-->
+                <!--<input type="text" class="form-control" name="remote_path" ng-model="project.remote_path" ng-required="true" />-->
+                <!--<div class="help-block-error" ng-show="submitted && form.remote_path.$error.required" >Remote path is required.</div>-->
+            <!--</div>-->
+
             <div class="form-group">
-                <label>Git branch</label>
-                <input type="text" class="form-control" name="git_branch" ng-model="project.git_branch" ng-required="true" />
-                <div class="help-block-error" ng-show="submitted && form.git_branch.$error.required" >Git branch is required.</div>
+                <label>SSH public key</label>
+                <textarea class="form-control" name="public_key" ng-model="project.public_key" ng-required="true"></textarea>
+                <div class="help-block-error" ng-show="submitted && form.public_key.$error.required" >Public key is required.</div>
+            </div>
+
+            <div class="form-group">
+                <label>SSH private key</label>
+                <textarea class="form-control" name="private_key" ng-model="project.private_key" ng-required="true"></textarea>
+                <div class="help-block-error" ng-show="submitted && form.private_key.$error.required" >Private key is required.</div>
             </div>
 
             <div class="form-group">

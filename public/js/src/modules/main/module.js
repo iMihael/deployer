@@ -13,5 +13,10 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 templateUrl: viewPath + 'project/create.html',
                 controller: 'projectCreate',
                 title: 'Deployer - Create Project'
+            })
+            .when('/project/:id', {
+                templateUrl: viewPath + 'project/view.html',
+                title: 'Deployer - Project',
+                controller: 'projectView'
             });
     }]);

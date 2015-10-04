@@ -1,5 +1,6 @@
 angular.module('app', [
     'ngRoute',
+    'ui.bootstrap',
     'angular-loading-bar',
     'angular-growl',
     'main'
@@ -18,6 +19,8 @@ angular.module('app', [
         if (current.hasOwnProperty('$$route')) {
             if(current.$$route.hasOwnProperty('title'))
                 $rootScope.title = current.$$route.title;
+
+            $rootScope.navbarCollapsed = false;
         }
     });
 }]);

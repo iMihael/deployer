@@ -1,5 +1,6 @@
 angular.module('main').controller('projectCreate',  ['$scope', 'project', '$location', 'growl', function($scope, project, $location, growl){
 
+    //TODO: fix growl
     $scope.project = {};
 
     $scope.submitted = false;
