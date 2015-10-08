@@ -21,19 +21,17 @@ var ret = {
     },
     addProject: function(project, callback) {
         db.collection('projects').insertOne(project, function(err, result){
-            if(!err) {
+            if(!err && result.ops && result.ops.length == 1) {
                 if(callback) {
-                    callback(result);
+                    callback(result.ops[0]);
                 }
             }
         });
     },
     getProject: function(id, callback, error) {
-        //TODO: fix this
         var id = new mongo.ObjectID(id);
-        console.log(id);
-        var cursor = db.collection('projects').find({'_id': id});
-        cursor.each(function(err, doc) {
+
+        db.collection('projects').findOne({'_id': id}, function(err, doc){
             if(!err) {
                 if (doc != null) {
                     callback(doc);
@@ -44,8 +42,13 @@ var ret = {
             error(err);
         });
     },
-    deleteProject: function(id, classback) {
-        db.collection('projects').update({_id: id}, {deletedAt: new Date()});
+    deleteProject: function(id, callback) {
+        var id = new mongo.ObjectID(id);
+        db.collection('projects').updateOne({_id: id}, {$set: {deletedAt: new Date()}}, callback);
+    },
+    restoreProject: function(id, callback) {
+        var id = new mongo.ObjectID(id);
+        db.collection('projects').updateOne({_id: id}, {$unset: {deletedAt: new Date()}}, callback);
     }
 };
 

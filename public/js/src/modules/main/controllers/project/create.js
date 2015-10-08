@@ -8,9 +8,9 @@ angular.module('main').controller('projectCreate',  ['$scope', 'project', '$loca
         $scope.submitted = true;
 
         if($scope.form.$valid) {
-            project.create($scope.project, function(){
+            project.create($scope.project, function(data){
                 growl.success('Project successfully created.');
-                $location.path('/');
+                $location.path('/project/' + data._id);
             });
         }
     };

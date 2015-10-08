@@ -12,6 +12,10 @@ angular.module('main').factory('project', ['$resource', function($resource) {
         delete: {
             method: 'DELETE',
             url: '/v1/project/:id'
+        },
+        restore: {
+            method: 'POST',
+            url: '/v1/project/:id/restore'
         }
     });
 

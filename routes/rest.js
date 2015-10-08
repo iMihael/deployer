@@ -16,7 +16,7 @@ router.post('/projects', function(req, res){
 });
 
 router.get('/project/:id', function(req, res){
-    mongo.getProject(req.id, function(doc){
+    mongo.getProject(req.params.id, function(doc){
         res.json(doc);
     }, function(err){
         res.status(422);
@@ -24,8 +24,18 @@ router.get('/project/:id', function(req, res){
     });
 });
 
-router.delete('/project/:id', function(req, res){
+router.post('/project/:id/restore', function(req, res){
+    mongo.restoreProject(req.params.id, function(){
+        res.status(204);
+        res.end();
+    });
+});
 
+router.delete('/project/:id', function(req, res){
+    mongo.deleteProject(req.params.id, function(){
+        res.status(204);
+        res.end();
+    });
 });
 
 module.exports = router;

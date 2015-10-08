@@ -21,10 +21,11 @@
                 {{ row.name }}
             </td>
             <td>
-                <div class="btn-group">
+                <div class="btn-group" ng-show="!row.deleted">
                     <a href="#/project/{{ row._id }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a ng-click="deleteProject(row)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
                 </div>
+                <div ng-show="row.deleted">Project deleted. <a href="" ng-click="restoreProject(row)">Restore ?</a></div>
             </td>
         </tr>
     </tbody>
