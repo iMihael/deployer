@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+    <li><a href="#/">Projects</a></li>
+    <li class="active">{{ project.name }}</li>
+</ol>
+
 <div class="panel panel-default col-lg-12" ng-show="project">
     <div class="panel-heading">
         <h2>{{ project.name }} <small>Project</small></h2>
@@ -15,14 +20,15 @@
             <li ng-class="{'active': activeTab == 'config'}"  ng-click="activeTab = 'config'"><a href="">Project Config</a></li>
         </ul>
 
-        <div ng-show="activeTab == 'general'" ng-include src="viewPath + 'general.html'"></div>
-        <div ng-show="activeTab == 'remotes'" ng-include src="viewPath + 'remotes.html'"></div>
-        <div ng-show="activeTab == 'local_commands'" ng-include src="viewPath + 'local-commands.html'"></div>
-        <div ng-show="activeTab == 'remote_commands'" ng-include src="viewPath + 'remote-commands.html'"></div>
-        <div ng-show="activeTab == 'remote_symlinks'" ng-include src="viewPath + 'remote-symlinks.html'"></div>
-        <div ng-show="activeTab == 'uploads'" ng-include src="viewPath + 'uploads.html'"></div>
-        <div ng-show="activeTab == 'config'" ng-include src="viewPath + 'config.html'"></div>
-
+        <div style="padding-top:10px;">
+            <div ng-show="activeTab == 'general'" ng-include src="viewPath + 'general.html'"></div>
+            <div ng-show="activeTab == 'remotes'" ng-include src="viewPath + 'remotes.html'"></div>
+            <div ng-show="activeTab == 'local_commands'" ng-include src="viewPath + 'local-commands.html'"></div>
+            <div ng-show="activeTab == 'remote_commands'" ng-include src="viewPath + 'remote-commands.html'"></div>
+            <div ng-show="activeTab == 'remote_symlinks'" ng-include src="viewPath + 'remote-symlinks.html'"></div>
+            <div ng-show="activeTab == 'uploads'" ng-include src="viewPath + 'uploads.html'"></div>
+            <div ng-show="activeTab == 'config'" ng-include src="viewPath + 'config.html'"></div>
+        </div>
     </div>
 
 </div>

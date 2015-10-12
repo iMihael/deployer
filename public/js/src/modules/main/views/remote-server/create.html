@@ -1,0 +1,59 @@
+<ol class="breadcrumb" ng-show="project">
+    <li><a href="#/">Projects</a></li>
+    <li><a href="#/project/{{ project._id }}">{{ project.name }}</a></li>
+    <li class="active">Add Remote</li>
+</ol>
+
+<div class="panel panel-default col-lg-offset-4 col-lg-4">
+    <div class="panel-heading">
+        <h2>Add Remote</h2>
+    </div>
+
+    <div class="panel-body">
+        <p>Add remote server with <b>SSH</b> access.</p>
+        <form novalidate name="form" ng-submit="submit();">
+            <div class="form-group">
+                <label>Name</label>
+                <input name="name" ng-model="remote.name" type="text" class="form-control" ng-required="true" />
+                <div class="help-block-error" ng-show="submitted && form.name.$error.required" >Remote name is required.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Host</label>
+                <input name="host" ng-model="remote.host" type="text" class="form-control" ng-required="true" />
+                <div class="help-block-error" ng-show="submitted && form.host.$error.required" >Host is required.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Port</label>
+                <input type="text" ng-model="remote.port" class="form-control" ng-required="true" />
+                <div class="help-block-error" ng-show="submitted && form.port.$error.required" >Port is required.</div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input ng-model="remote.projectKeys" type="checkbox" /> Use project SSH keys
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Public key</label>
+                <textarea name="public_key" ng-model="remote.public_key" ng-required="!remote.projectKeys" ng-disabled="remote.projectKeys" class="form-control"></textarea>
+                <div class="help-block-error" ng-show="submitted && form.public_key.$error.required" >Public key is required.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Private key</label>
+                <textarea ng-disabled="remote.projectKeys" name="private_key" ng-required="!remote.projectKeys" ng-model="remote.private_key" class="form-control"></textarea>
+                <div class="help-block-error" ng-show="submitted && form.private_key.$error.required" >Private key is required.</div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary form-control" value="Add" />
+            </div>
+        </form>
+
+    </div>
+</div>

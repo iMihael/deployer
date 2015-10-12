@@ -18,5 +18,10 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 templateUrl: viewPath + 'project/view.html',
                 title: 'Deployer - Project',
                 controller: 'projectView'
+            })
+            .when('/project/create/remote/:id', {
+                templateUrl: viewPath + 'remote-server/create.html',
+                title: 'Deployer - Create Remote',
+                controller: 'remoteCreate'
             });
     }]);
