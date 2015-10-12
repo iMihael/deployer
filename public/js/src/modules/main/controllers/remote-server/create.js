@@ -1,21 +1,29 @@
-angular.module('main').controller('remoteCreate',  ['$scope', 'project', '$location', 'growl', '$routeParams', function($scope, project, $location, growl, $routeParams){
+angular.module('main').controller('remoteCreate',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote',
+    function($scope, project, $location, growl, $routeParams, remote){
 
     project.get({
         id: $routeParams.id
     }, function(data){
         $scope.project = data;
+    }, function(){
+        $location.path('/');
     });
+
 
     $scope.submitted = false;
     $scope.submit = function(){
         $scope.submitted = true;
         if($scope.form.$valid) {
-            console.log('submit');
+            remote.create({
+                id: $routeParams.id
+            }, $scope.remote, function(){
+               $location.path('/project/' + $routeParams.id);
+            });
         }
     };
 
     $scope.remote = {
-        projectKeys: true,
+        project_keys: true,
         port: 22
     };
 }]);

@@ -1,1 +1,22 @@
-<a href="#/project/create/remote/{{ project._id }}" class="btn btn-primary">Add Remote</a>
+<p>
+    <a href="#/project/create/remote/{{ project._id }}" class="btn btn-primary">Add Remote</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Host</th>
+            <th>Port</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="r in project.remotes">
+            <td>{{ r.name }}</td>
+            <td>{{ r.host }}</td>
+            <td>{{ r.port }}</td>
+            <td><a ng-click="remote.remove(r.id)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+    </tbody>
+</table>

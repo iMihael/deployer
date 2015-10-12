@@ -23,5 +23,10 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 templateUrl: viewPath + 'remote-server/create.html',
                 title: 'Deployer - Create Remote',
                 controller: 'remoteCreate'
+            })
+            .when('/project/create/local_command/:id', {
+                templateUrl: viewPath + 'local-command/create.html',
+                title: 'Deployer - Create Local Command',
+                controller: 'localCommandCreate'
             });
     }]);
