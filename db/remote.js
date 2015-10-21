@@ -1,22 +1,10 @@
 var m = require('../components/mongo');
 var p = require('./project');
 
-var getRandomArbitrary = function(min, max) {
-    return parseInt(Math.random() * (max - min) + min);
-};
-
-var getTimeStamp = function() {
-    return parseInt(Date.now() / 1000);
-};
-
-var getRandomId = function(){
-    return getRandomArbitrary(10000, 99999).toString() + getTimeStamp().toString();
-};
-
 module.exports = {
     addRemote: function(data, projectId, success, error){
         p.getProject(projectId, function(project){
-            var id = getRandomId();
+            var id = p.getRandomId();
             data['id'] = id;
             if(!project.hasOwnProperty('remotes')) {
                 project['remotes'] = [];

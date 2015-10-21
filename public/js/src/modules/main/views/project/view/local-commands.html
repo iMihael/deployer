@@ -1,3 +1,20 @@
 <p>
     <a href="#/project/create/local_command/{{ project._id }}" class="btn btn-primary">Add Local Command</a>
 </p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Command</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="lc in project.local_commands">
+        <td>{{ lc.name }}</td>
+        <td>{{ lc.command }}</td>
+        <td><a ng-click="local_command.remove(lc.id)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
+    </tr>
+    </tbody>
+</table>

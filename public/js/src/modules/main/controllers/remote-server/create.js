@@ -17,7 +17,7 @@ angular.module('main').controller('remoteCreate',  ['$scope', 'project', '$locat
             remote.create({
                 id: $routeParams.id
             }, $scope.remote, function(){
-               $location.path('/project/' + $routeParams.id);
+               $location.path('/project/' + $routeParams.id + '/remotes');
             });
         }
     };

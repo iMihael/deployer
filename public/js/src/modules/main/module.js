@@ -14,7 +14,7 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 controller: 'projectCreate',
                 title: 'Deployer - Create Project'
             })
-            .when('/project/:id', {
+            .when('/project/:id/:tab', {
                 templateUrl: viewPath + 'project/view.html',
                 title: 'Deployer - Project',
                 controller: 'projectView'

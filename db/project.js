@@ -1,6 +1,18 @@
 var mongo = require('mongodb');
 var m = require('../components/mongo');
 
+var getRandomArbitrary = function(min, max) {
+    return parseInt(Math.random() * (max - min) + min);
+};
+
+var getTimeStamp = function() {
+    return parseInt(Date.now() / 1000);
+};
+
+var getRandomId = function(){
+    return getRandomArbitrary(10000, 99999).toString() + getTimeStamp().toString();
+};
+
 module.exports = {
     getProjects: function(callback){
         var result = [];
@@ -46,5 +58,6 @@ module.exports = {
     restoreProject: function(id, callback) {
         var id = new mongo.ObjectID(id);
         m.db().collection('projects').updateOne({_id: id}, {$unset: {deletedAt: new Date()}}, callback);
-    }
+    },
+    getRandomId: getRandomId
 };

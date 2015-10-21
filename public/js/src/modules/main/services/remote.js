@@ -1,6 +1,4 @@
 angular.module('main').factory('remote', ['$resource', function($resource) {
-
-
     return $resource('/v1', {}, {
         create: {
             url: '/v1/project/:id/remote/create',
