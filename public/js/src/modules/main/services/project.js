@@ -16,6 +16,10 @@ angular.module('main').factory('project', ['$resource', function($resource) {
         restore: {
             method: 'POST',
             url: '/v1/project/:id/restore'
+        },
+        update: {
+            method: 'PUT',
+            url: '/v1/project/:id'
         }
     });
 

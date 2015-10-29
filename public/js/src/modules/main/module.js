@@ -38,5 +38,10 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 templateUrl: viewPath + 'symlink/create.html',
                 title: 'Deployer - Create Symlink',
                 controller: 'symlinkCreate'
+            })
+            .when('/project/create/upload/:id', {
+                templateUrl: viewPath + 'upload/create.html',
+                title: 'Deployer - Create Upload',
+                controller: 'uploadCreate'
             });
     }]);

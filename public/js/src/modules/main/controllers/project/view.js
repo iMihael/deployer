@@ -1,5 +1,5 @@
-angular.module('main').controller('projectView',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote', 'local_command', 'remote_command', 'symlink',
-    function($scope, project, $location, growl, $routeParams, remote, local_command, remote_command, symlink){
+angular.module('main').controller('projectView',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote', 'local_command', 'remote_command', 'symlink', 'upload',
+    function($scope, project, $location, growl, $routeParams, remote, local_command, remote_command, symlink, upload){
 
     $scope.viewPath = 'js/src/modules/main/views/project/view/';
     $scope.activeTab = $routeParams.tab;
@@ -9,6 +9,11 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
     }, function(data){
         $scope.project = data;
     });
+
+        $scope.submitted = false;
+        $scope.update = function(){
+
+        };
 
     $scope.remote = {
         remove: function(id){
@@ -74,4 +79,21 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
             }
         };
 
-}]);
+        $scope.upload = {
+            remove: function(id){
+                upload.delete({
+                    id: $routeParams.id,
+                    uploadId: id
+                }, function(){
+                    for(var i in $scope.project.uploads) {
+                        if($scope.project.uploads[i].id == id) {
+                            $scope.project.uploads.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+            }
+        };
+
+
+    }]);

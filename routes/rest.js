@@ -33,4 +33,9 @@ var symlinkCommandController = require('../controllers/symlink');
 router.post('/project/:id/symlink/create', symlinkCommandController.create);
 router.delete('/project/:id/symlink/delete/:symlinkId', symlinkCommandController.delete);
 
+var uploadCommandController = require('../controllers/upload');
+
+router.post('/project/:id/upload/create', uploadCommandController.create);
+router.delete('/project/:id/upload/delete/:uploadId', uploadCommandController.delete);
+
 module.exports = router;
