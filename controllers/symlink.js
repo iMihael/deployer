@@ -1,9 +1,9 @@
-var r = require('../db/remote');
+var lc = require('../db/symlink');
 
 module.exports = {
     create: function(req, res) {
-        var remote = req.body;
-        r.addRemote(remote, req.params.id, function(data){
+        var symlink = req.body;
+        lc.addSymlink(symlink, req.params.id, function(data){
             res.json(data);
         }, function(){
             res.status(422);
@@ -11,7 +11,7 @@ module.exports = {
         });
     },
     delete: function(req, res) {
-        r.deleteRemote(req.params.id, req.params.remoteId, function(){
+        lc.deleteSymlink(req.params.id, req.params.symlinkId, function(){
             res.status(204);
             res.end();
         }, function(){

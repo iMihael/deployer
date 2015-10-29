@@ -1,5 +1,5 @@
-angular.module('main').controller('projectView',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote', 'local_command',
-    function($scope, project, $location, growl, $routeParams, remote, local_command){
+angular.module('main').controller('projectView',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote', 'local_command', 'remote_command', 'symlink',
+    function($scope, project, $location, growl, $routeParams, remote, local_command, remote_command, symlink){
 
     $scope.viewPath = 'js/src/modules/main/views/project/view/';
     $scope.activeTab = $routeParams.tab;
@@ -30,7 +30,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         remove: function(id){
             local_command.delete({
                 id: $routeParams.id,
-                remoteId: id
+                commandId: id
             }, function(){
                 for(var i in $scope.project.local_commands) {
                     if($scope.project.local_commands[i].id == id) {
@@ -41,5 +41,37 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
             });
         }
     };
+
+        $scope.remote_command = {
+            remove: function(id){
+                remote_command.delete({
+                    id: $routeParams.id,
+                    commandId: id
+                }, function(){
+                    for(var i in $scope.project.remote_commands) {
+                        if($scope.project.remote_commands[i].id == id) {
+                            $scope.project.remote_commands.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+            }
+        };
+
+        $scope.symlink = {
+            remove: function(id){
+                symlink.delete({
+                    id: $routeParams.id,
+                    symlinkId: id
+                }, function(){
+                    for(var i in $scope.project.symlinks) {
+                        if($scope.project.symlinks[i].id == id) {
+                            $scope.project.symlinks.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+            }
+        };
 
 }]);

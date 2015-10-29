@@ -17,7 +17,8 @@ angular.module('main').controller('remoteCreate',  ['$scope', 'project', '$locat
             remote.create({
                 id: $routeParams.id
             }, $scope.remote, function(){
-               $location.path('/project/' + $routeParams.id + '/remotes');
+                $location.path('/project/' + $routeParams.id + '/remotes');
+                growl.success('Remote server successfully added.');
             });
         }
     };

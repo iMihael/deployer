@@ -1,4 +1,4 @@
-var lc = require('../db/local_command.js');
+var lc = require('../db/local_command');
 
 module.exports = {
     create: function(req, res) {
@@ -11,7 +11,7 @@ module.exports = {
         });
     },
     delete: function(req, res) {
-        lc.deleteLocal(req.params.id, req.params.remoteId, function(){
+        lc.deleteLocal(req.params.id, req.params.commandId, function(){
             res.status(204);
             res.end();
         }, function(){

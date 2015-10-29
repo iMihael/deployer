@@ -11,6 +11,7 @@ angular.module('main').controller('projectCreate',  ['$scope', 'project', '$loca
             project.create($scope.project, function(data){
                 growl.success('Project successfully created.');
                 $location.path('/project/' + data._id);
+                growl.success('Project successfully created.');
             });
         }
     };

@@ -18,6 +18,7 @@ angular.module('main').controller('localCommandCreate',  ['$scope', 'project', '
                     id: $routeParams.id
                 }, $scope.local_command, function(){
                     $location.path('/project/' + $routeParams.id + '/local_commands');
+                    growl.success('Local command successfully added.');
                 });
             }
         };

@@ -15,7 +15,7 @@
             <li ng-class="{'active': activeTab == 'remotes'}" ng-click="activeTab = 'remotes'"><a href="">Remote Servers</a></li>
             <li ng-class="{'active': activeTab == 'local_commands'}" ng-click="activeTab = 'local_commands'"><a href="">Local Commands</a></li>
             <li ng-class="{'active': activeTab == 'remote_commands'}" ng-click="activeTab = 'remote_commands'"><a href="">Remote Commands</a></li>
-            <li ng-class="{'active': activeTab == 'remote_symlinks'}"  ng-click="activeTab = 'remote_symlinks'"><a href="">Remote Symlinks</a></li>
+            <li ng-class="{'active': activeTab == 'symlinks'}"  ng-click="activeTab = 'symlinks'"><a href="">Remote Symlinks</a></li>
             <li ng-class="{'active': activeTab == 'uploads'}"  ng-click="activeTab = 'uploads'"><a href="">Uploads</a></li>
             <li ng-class="{'active': activeTab == 'config'}"  ng-click="activeTab = 'config'"><a href="">Project Config</a></li>
         </ul>
@@ -25,7 +25,7 @@
             <div ng-show="activeTab == 'remotes'" ng-include src="viewPath + 'remotes.html'"></div>
             <div ng-show="activeTab == 'local_commands'" ng-include src="viewPath + 'local-commands.html'"></div>
             <div ng-show="activeTab == 'remote_commands'" ng-include src="viewPath + 'remote-commands.html'"></div>
-            <div ng-show="activeTab == 'remote_symlinks'" ng-include src="viewPath + 'remote-symlinks.html'"></div>
+            <div ng-show="activeTab == 'symlinks'" ng-include src="viewPath + 'remote-symlinks.html'"></div>
             <div ng-show="activeTab == 'uploads'" ng-include src="viewPath + 'uploads.html'"></div>
             <div ng-show="activeTab == 'config'" ng-include src="viewPath + 'config.html'"></div>
         </div>

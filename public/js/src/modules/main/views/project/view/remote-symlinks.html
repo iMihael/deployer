@@ -1,1 +1,20 @@
-<h2>Remote Symlinks</h2>
+<p>
+    <a href="#/project/create/symlink/{{ project._id }}" class="btn btn-primary">Add Remote Symlink</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Source</th>
+        <th>Destination</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="s in project.symlinks">
+        <td>{{ s.source }}</td>
+        <td>{{ s.destination }}</td>
+        <td><a ng-click="symlink.remove(s.id)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
+    </tr>
+    </tbody>
+</table>

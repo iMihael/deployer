@@ -28,5 +28,15 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 templateUrl: viewPath + 'local-command/create.html',
                 title: 'Deployer - Create Local Command',
                 controller: 'localCommandCreate'
+            })
+            .when('/project/create/remote_command/:id', {
+                templateUrl: viewPath + 'remote-command/create.html',
+                title: 'Deployer - Create Remote Command',
+                controller: 'remoteCommandCreate'
+            })
+            .when('/project/create/symlink/:id', {
+                templateUrl: viewPath + 'symlink/create.html',
+                title: 'Deployer - Create Symlink',
+                controller: 'symlinkCreate'
             });
     }]);
