@@ -14,6 +14,11 @@ var getRandomId = function(){
 };
 
 module.exports = {
+    updateProject: function(id, data, success, error) {
+        module.exports.getProject(id, function(project){
+            m.db().collection('projects').updateOne({_id: project._id}, {$set: data}, success);
+        }, error);
+    },
     getProjects: function(callback){
         var result = [];
 

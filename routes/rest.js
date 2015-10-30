@@ -9,6 +9,7 @@ router.post('/projects', projectController.add);
 router.get('/project/:id', projectController.getOne);
 router.post('/project/:id/restore', projectController.restore);
 router.delete('/project/:id', projectController.delete);
+router.put('/project/:id', projectController.update);
 
 //remote
 var remoteController = require('../controllers/remote');

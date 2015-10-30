@@ -11,8 +11,18 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
     });
 
         $scope.submitted = false;
-        $scope.update = function(){
-
+        $scope.update = function(form){
+            $scope.submitted = true;
+            if(form.$valid) {
+                project.update({id: $routeParams.id}, {
+                    name: $scope.project.name,
+                    git_remote: $scope.project.git_remote,
+                    public_key: $scope.project.public_key,
+                    private_key: $scope.project.private_key,
+                }, function(){
+                    growl.success('Project successfully updated.');
+                });
+            }
         };
 
     $scope.remote = {
@@ -95,5 +105,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
             }
         };
 
+
+        $scope.deployFlow = [];
 
     }]);

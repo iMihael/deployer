@@ -3,6 +3,7 @@ angular.module('app', [
     'ui.bootstrap',
     'angular-loading-bar',
     'angular-growl',
+    'dndLists',
     'main'
 ]).config(['$routeProvider', 'growlProvider', function($routeProvider, growlProvider){
 

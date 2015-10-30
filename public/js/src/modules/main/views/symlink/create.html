@@ -4,32 +4,34 @@
     <li class="active">Add Symlink</li>
 </ol>
 
-<div class="panel panel-default col-lg-offset-4 col-lg-4">
-    <div class="panel-heading">
-        <h2>Add Symlink</h2>
-    </div>
+<div class="col-lg-offset-4 col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>Add Symlink</h2>
+        </div>
 
-    <div class="panel-body">
-        <p>Add symlink for shared files in project, for example to images or config files that will be the same from one release to other.</p>
-        <form novalidate name="form" ng-submit="submit();">
-            <div class="form-group">
-                <label>Source file or folder path</label>
-                <!--<input name="source" ng-model="symlink.source" type="text" class="form-control" ng-required="true" />-->
-                <textarea name="source" ng-model="symlink.source" class="form-control" ng-required="true" ></textarea>
-                <div class="help-block-error" ng-show="submitted && form.source.$error.required" >Source file or folder path is required.</div>
-            </div>
+        <div class="panel-body">
+            <p>Add symlink for shared files in project, for example to images or config files that will be the same from one release to other.</p>
+            <form novalidate name="form" ng-submit="submit();">
+                <div class="form-group">
+                    <label>Source file or folder path</label>
+                    <!--<input name="source" ng-model="symlink.source" type="text" class="form-control" ng-required="true" />-->
+                    <textarea name="source" ng-model="symlink.source" class="form-control" ng-required="true" ></textarea>
+                    <div class="help-block-error" ng-show="submitted && form.source.$error.required" >Source file or folder path is required.</div>
+                </div>
 
-            <div class="form-group">
-                <label>Destination symlink path</label>
-                <textarea name="destination" ng-model="symlink.destination" class="form-control" ng-required="true" ></textarea>
-                <div class="help-block-error" ng-show="submitted && form.destination.$error.required" >Destination symlink path is required.</div>
-            </div>
+                <div class="form-group">
+                    <label>Destination symlink path</label>
+                    <textarea name="destination" ng-model="symlink.destination" class="form-control" ng-required="true" ></textarea>
+                    <div class="help-block-error" ng-show="submitted && form.destination.$error.required" >Destination symlink path is required.</div>
+                </div>
 
 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary form-control" value="Add" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary form-control" value="Add" />
+                </div>
+            </form>
 
+        </div>
     </div>
 </div>

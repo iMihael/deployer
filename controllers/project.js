@@ -7,6 +7,15 @@ module.exports = {
             res.json(data);
         });
     },
+    update: function(req, res) {
+        p.updateProject(req.params.id, req.body, function(){
+            res.status(204);
+            res.end();
+        }, function(){
+            res.status(422);
+            res.end();
+        })
+    },
     add: function(req, res) {
         var project = req.body;
         p.addProject(project, function(data){
