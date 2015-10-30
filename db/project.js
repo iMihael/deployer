@@ -1,5 +1,6 @@
 var mongo = require('mongodb');
 var m = require('../components/mongo');
+var deploy = require('../components/deploy');
 
 var getRandomArbitrary = function(min, max) {
     return parseInt(Math.random() * (max - min) + min);
@@ -14,6 +15,19 @@ var getRandomId = function(){
 };
 
 module.exports = {
+    deployProject: function(id, success, error) {
+
+        module.exports.getProject(id, function(project){
+            success();
+            deploy.deploy(project);
+        }, error);
+    },
+    rollbackProject: function(id, success, error) {
+        module.exports.getProject(id, function(project){
+            success();
+            deploy.rollback(project);
+        }, error);
+    },
     updateProject: function(id, data, success, error) {
         module.exports.getProject(id, function(project){
             m.db().collection('projects').updateOne({_id: project._id}, {$set: data}, success);

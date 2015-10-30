@@ -20,6 +20,14 @@ angular.module('main').factory('project', ['$resource', function($resource) {
         update: {
             method: 'PUT',
             url: '/v1/project/:id'
+        },
+        deploy: {
+            method: 'POST',
+            url: '/v1/project/:id/deploy'
+        },
+        rollback: {
+            method: 'POST',
+            url: '/v1/project/:id/rollback'
         }
     });
 

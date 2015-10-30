@@ -1,5 +1,5 @@
 var p = require('../db/project');
-
+var ssh = require('../components/ssh');
 
 module.exports = {
     getAll: function(req, res) {
@@ -25,6 +25,9 @@ module.exports = {
     getOne: function(req, res) {
         p.getProject(req.params.id, function(doc){
             res.json(doc);
+
+
+
         }, function(err){
             res.status(422);
             res.json(err);
@@ -39,6 +42,24 @@ module.exports = {
     delete: function(req, res) {
         p.deleteProject(req.params.id, function(){
             res.status(204);
+            res.end();
+        });
+    },
+    deploy: function(req, res) {
+        p.deployProject(req.params.id, function(){
+            res.status(204);
+            res.end();
+        }, function(){
+            res.status(422);
+            res.end();
+        });
+    },
+    rollback: function(req, res) {
+        p.rollbackProject(req.params.id, function(){
+            res.status(204);
+            res.end();
+        }, function(){
+            res.status(422);
             res.end();
         });
     }

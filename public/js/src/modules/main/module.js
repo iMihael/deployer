@@ -1,7 +1,7 @@
-angular.module('main', ['ngRoute', 'ngResource'])
-    .config(['$routeProvider', function($routeProvider){
+angular.module('main', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+    .config(['$routeProvider', 'viewPath', function($routeProvider, viewPath){
 
-        var viewPath = 'js/src/modules/main/views/';
+        //var viewPath = 'js/src/modules/main/views/';
 
         $routeProvider
             .when('/', {
@@ -44,4 +44,4 @@ angular.module('main', ['ngRoute', 'ngResource'])
                 title: 'Deployer - Create Upload',
                 controller: 'uploadCreate'
             });
-    }]);
+    }]).constant('viewPath', 'js/src/modules/main/views/');

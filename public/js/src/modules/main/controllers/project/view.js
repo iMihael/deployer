@@ -1,5 +1,6 @@
-angular.module('main').controller('projectView',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote', 'local_command', 'remote_command', 'symlink', 'upload',
-    function($scope, project, $location, growl, $routeParams, remote, local_command, remote_command, symlink, upload){
+angular.module('main').controller('projectView',  ['$scope', 'project', '$location', 'growl', '$routeParams', 'remote', 'local_command',
+    'remote_command', 'symlink', 'upload', '$modal', 'viewPath',
+    function($scope, project, $location, growl, $routeParams, remote, local_command, remote_command, symlink, upload, $modal, viewPath){
 
     $scope.viewPath = 'js/src/modules/main/views/project/view/';
     $scope.activeTab = $routeParams.tab;
@@ -115,6 +116,16 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
 
 
         $scope.deployFlow = {
+            deploy: function(){
+                if($scope.deployFlow.remote != '-1') {
+                    $modal.open({
+                        animation: true,
+                        templateUrl: viewPath + '/project/deploy.html',
+                        scope: $scope,
+                        controller: 'projectDeploy'
+                    });
+                }
+            },
             remote: '-1',
             drop: function(item, type, index){
 
@@ -159,6 +170,11 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         };
 
         $scope.rollbackFlow = {
+            rollback: function(){
+                if($scope.rollbackFlow.remote != '-1') {
+                    console.log('sss');
+                }
+            },
             remote: '-1',
             drop: function(item, type, index){
 

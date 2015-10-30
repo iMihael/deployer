@@ -10,6 +10,7 @@ module.exports = {
         });
     },
     deployLog: function(data) {
+        console.log(data);
         io.emit('deploy', data);
     },
     rollbackLog: function(data) {

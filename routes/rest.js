@@ -11,6 +11,9 @@ router.post('/project/:id/restore', projectController.restore);
 router.delete('/project/:id', projectController.delete);
 router.put('/project/:id', projectController.update);
 
+router.post('/project/:id/deploy', projectController.deploy);
+router.post('/project/:id/rollback', projectController.rollback);
+
 //remote
 var remoteController = require('../controllers/remote');
 
