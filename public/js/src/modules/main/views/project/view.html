@@ -3,12 +3,7 @@
     <li class="active">{{ project.name }}</li>
 </ol>
 
-<!--<div class="panel panel-default" ng-show="project">-->
-    <!--<div class="panel-heading">-->
-        <!--<h2>{{ project.name }} <small>Project</small></h2>-->
-    <!--</div>-->
 
-    <!--<div class="panel-body">-->
 
         <ul class="nav nav-tabs" >
             <li ng-class="{'active': activeTab == 'general'}" ng-click="activeTab = 'general'"><a href="">General</a></li>
@@ -29,6 +24,3 @@
             <div ng-show="activeTab == 'uploads'" ng-include src="viewPath + 'uploads.html'"></div>
             <div ng-show="activeTab == 'config'" ng-include src="viewPath + 'config.html'"></div>
         </div>
-    <!--</div>-->
-
-<!--</div>-->

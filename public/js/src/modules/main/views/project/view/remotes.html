@@ -8,6 +8,7 @@
             <th>Name</th>
             <th>Host</th>
             <th>Port</th>
+            <th>Git Branch</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -16,6 +17,7 @@
             <td>{{ r.name }}</td>
             <td>{{ r.host }}</td>
             <td>{{ r.port }}</td>
+            <td>{{ r.branch }}</td>
             <td><a ng-click="remote.remove(r.id)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
     </tbody>

@@ -10,6 +10,11 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         $scope.project = data;
         $scope.deployFlow.list = data.deployFlow;
         $scope.rollbackFlow.list = data.rollbackFlow;
+
+        if(data.remotes.length == 1) {
+            $scope.deployFlow.remote = data.remotes[0].id;
+            $scope.rollbackFlow.remote = data.remotes[0].id;
+        }
     });
 
         $scope.submitted = false;
@@ -110,6 +115,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
 
 
         $scope.deployFlow = {
+            remote: '-1',
             drop: function(item, type, index){
 
                 if(type == 'local_command' ) {
@@ -153,6 +159,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         };
 
         $scope.rollbackFlow = {
+            remote: '-1',
             drop: function(item, type, index){
 
                 if(type == 'local_command' ) {

@@ -24,4 +24,6 @@ angular.module('app', [
             $rootScope.navbarCollapsed = false;
         }
     });
+
+    window.socket = io();
 }]);

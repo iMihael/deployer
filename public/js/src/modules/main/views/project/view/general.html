@@ -44,7 +44,7 @@
 <div class="col-lg-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h2>Deploy flow</h2>
+            <h2>Deploy Flow</h2>
         </div>
         <div class="panel-body general-panel" >
             <ul dnd-drop="deployFlow.drop(item, type, index);" class="list-group"
@@ -62,17 +62,32 @@
                 </li>
             </ul>
 
+
+
             <div class="clear"></div>
         </div>
     </div>
+
+    <div class="input-group">
+
+        <select class="form-control" ng-model="deployFlow.remote">
+            <option value="-1"></option>
+            <option ng-repeat="remote in project.remotes" value="{{ remote.id }}">
+                {{ remote.name }}
+            </option>
+        </select>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Deploy</button>
+        </span>
+    </div><!-- /input-group -->
 </div>
 
 <div class="col-lg-4">
-    <div class="panel panel-warning">
+    <div class="panel panel-warning ">
         <div class="panel-heading">
-            <h2>Rollback flow</h2>
+            <h2>Rollback Flow</h2>
         </div>
-        <div class="panel-body">
+        <div class="panel-body general-panel">
             <ul dnd-drop="rollbackFlow.drop(item, type, index);" class="list-group"
                 dnd-allowed-types="['local_command', 'rollback', 'remote_command', 'symlink', 'upload']" dnd-list="rollbackFlow.list" style="min-height: 200px;" >
                 <li dnd-disable-if="rf.primary"
@@ -91,6 +106,19 @@
             <div class="clear"></div>
         </div>
     </div>
+
+    <div class="input-group">
+
+        <select class="form-control" ng-model="rollbackFlow.remote">
+            <option value="-1"></option>
+            <option ng-repeat="remote in project.remotes" value="{{ remote.id }}">
+                {{ remote.name }}
+            </option>
+        </select>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Rollback</button>
+        </span>
+    </div><!-- /input-group -->
 </div>
 
 <div class="clear"></div>
