@@ -8,6 +8,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         id: $routeParams.id
     }, function(data){
         $scope.project = data;
+        $scope.deployFlow.list = data.deployFlow;
     });
 
         $scope.submitted = false;
@@ -107,14 +108,29 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
 
 
         $scope.deployFlow = {
-            drop: function(item, type){
+            drop: function(item, type, index){
+
                 if(type == 'local_command' ) {
                     item.title = item.name;
                     item.description = 'Local Command';
                 } else if(type == 'remote_command') {
                     item.title = item.name;
                     item.description = 'Remote Command';
+                } else if(type == 'symlink') {
+                    item.title = item.source + "\n" + item.destination;
+                    item.description = 'Symlink';
+                } else if(type == 'upload') {
+                    item.title = item.source + "\n" + item.destination;
+                    item.description = 'Upload';
                 }
+
+                item.type = type;
+                item.index = index;
+
+                project.update({id: $routeParams.id}, {
+                    deployFlow: $scope.deployFlow.list
+                });
+
 
                 return item;
             },
@@ -127,6 +143,53 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
             ],
             remove: function($index){
                 $scope.deployFlow.list.splice($index, 1);
+
+                project.update({id: $routeParams.id}, {
+                    deployFlow: $scope.deployFlow.list
+                });
+            }
+        };
+
+        $scope.rollbackFlow = {
+            drop: function(item, type, index){
+
+                if(type == 'local_command' ) {
+                    item.title = item.name;
+                    item.description = 'Local Command';
+                } else if(type == 'remote_command') {
+                    item.title = item.name;
+                    item.description = 'Remote Command';
+                } else if(type == 'symlink') {
+                    item.title = item.source + "\n" + item.destination;
+                    item.description = 'Symlink';
+                } else if(type == 'upload') {
+                    item.title = item.source + "\n" + item.destination;
+                    item.description = 'Upload';
+                }
+
+                item.type = type;
+                item.index = index;
+
+                project.update({id: $routeParams.id}, {
+                    rollbackFlow: $scope.rollbackFlow.list
+                });
+
+
+                return item;
+            },
+            list: [
+                {
+                    title: 'Rollback',
+                    description: '',
+                    primary: true
+                }
+            ],
+            remove: function($index){
+                $scope.rollbackFlow.list.splice($index, 1);
+
+                project.update({id: $routeParams.id}, {
+                    rollbackFlow: $scope.rollbackFlow.list
+                });
             }
         };
 
