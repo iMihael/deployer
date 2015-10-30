@@ -4,7 +4,28 @@
             <h2>Actions</h2>
         </div>
         <div class="panel-body">
+            <label ng-show="project.local_commands && project.local_commands.length > 0">Local Commands</label>
+            <ul class="list-group" dnd-allowed-types="[]" dnd-list="project.local_commands">
+                <li dnd-type="'local_command'" dnd-draggable="lc" dnd-effect-allowed="copy" class="list-group-item" ng-repeat="lc in project.local_commands">
+                    <span ng-bind="lc.name"></span>
+                </li>
+            </ul>
 
+
+            <label ng-show="project.remote_commands && project.remote_commands.length > 0">Remote Commands</label>
+            <ul class="list-group" dnd-allowed-types="[]" dnd-list="project.remote_commands">
+                <li dnd-type="'remote_command'" dnd-draggable="rm" dnd-effect-allowed="copy" class="list-group-item" ng-repeat="rm in project.remote_commands">
+                    <span ng-bind="rm.name"></span>
+                </li>
+            </ul>
+
+            <label ng-show="project.symlinks && project.symlinks.length > 0">Symlinks</label>
+            <ul class="list-group" dnd-allowed-types="[]" dnd-list="project.symlinks">
+                <li dnd-type="'symlink'" dnd-draggable="sm" dnd-effect-allowed="copy" class="list-group-item" ng-repeat="sm in project.symlinks">
+                    <div ng-bind="sm.source"></div>
+                    <div ng-bind="sm.destination"></div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
@@ -15,13 +36,21 @@
             <h2>Deploy flow</h2>
         </div>
         <div class="panel-body">
+            <ul dnd-drop="deployFlow.drop(item, type, index);" class="list-group"
+                dnd-allowed-types="['local_command', 'deploy', 'remote_command']" dnd-list="deployFlow.list" style="min-height: 100px;height: 100%;" >
+                <li dnd-moved="deployFlow.list.splice($index, 1)" class="list-group-item" dnd-type="'deploy'" dnd-draggable="df" ng-repeat="df in deployFlow.list" ng-class="{'active': df.primary}">
+                    <span ng-bind="df.title"></span>
+                    <a ng-click="deployFlow.remove($index, df)" href="" ng-if="!df.primary" class="pull-right" style="margin-left:5px;"><span style="cursor: pointer;" class="glyphicon glyphicon-remove"></span></a>
+                    <em class="pull-right" ng-bind="df.description"></em>
 
+                </li>
+            </ul>
         </div>
     </div>
 </div>
 
 <div class="col-lg-4">
-    <div class="panel panel-primary">
+    <div class="panel panel-warning">
         <div class="panel-heading">
             <h2>Rollback flow</h2>
         </div>

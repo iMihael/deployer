@@ -106,6 +106,28 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         };
 
 
-        $scope.deployFlow = [];
+        $scope.deployFlow = {
+            drop: function(item, type){
+                if(type == 'local_command' ) {
+                    item.title = item.name;
+                    item.description = 'Local Command';
+                } else if(type == 'remote_command') {
+                    item.title = item.name;
+                    item.description = 'Remote Command';
+                }
+
+                return item;
+            },
+            list: [
+                {
+                    title: 'Deploy',
+                    description: '',
+                    primary: true
+                }
+            ],
+            remove: function($index){
+                $scope.deployFlow.list.splice($index, 1);
+            }
+        };
 
     }]);
