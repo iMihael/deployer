@@ -9,6 +9,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
     }, function(data){
         $scope.project = data;
         $scope.deployFlow.list = data.deployFlow;
+        $scope.rollbackFlow.list = data.rollbackFlow;
     });
 
         $scope.submitted = false;
@@ -20,6 +21,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
                     git_remote: $scope.project.git_remote,
                     public_key: $scope.project.public_key,
                     private_key: $scope.project.private_key,
+                    remote_path: $scope.project.remote_path,
                 }, function(){
                     growl.success('Project successfully updated.');
                 });
