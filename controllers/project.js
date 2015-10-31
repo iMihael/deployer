@@ -46,7 +46,7 @@ module.exports = {
         });
     },
     deploy: function(req, res) {
-        p.deployProject(req.params.id, function(){
+        p.deployProject(req.params.id, req.body, function(){
             res.status(204);
             res.end();
         }, function(){
@@ -55,7 +55,7 @@ module.exports = {
         });
     },
     rollback: function(req, res) {
-        p.rollbackProject(req.params.id, function(){
+        p.rollbackProject(req.params.id, req.body, function(){
             res.status(204);
             res.end();
         }, function(){

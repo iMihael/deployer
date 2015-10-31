@@ -28,6 +28,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
                     public_key: $scope.project.public_key,
                     private_key: $scope.project.private_key,
                     remote_path: $scope.project.remote_path,
+                    passphrase: $scope.project.passphrase
                 }, function(){
                     growl.success('Project successfully updated.');
                 });

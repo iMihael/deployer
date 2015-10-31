@@ -11,7 +11,7 @@ module.exports = {
     },
     deployLog: function(data) {
         console.log(data);
-        io.emit('deploy', data);
+        io.emit('deploy', data.toString());
     },
     rollbackLog: function(data) {
         io.emit('rollback', data);

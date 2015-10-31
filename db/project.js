@@ -15,17 +15,17 @@ var getRandomId = function(){
 };
 
 module.exports = {
-    deployProject: function(id, success, error) {
+    deployProject: function(id, remote, success, error) {
 
         module.exports.getProject(id, function(project){
             success();
-            deploy.deploy(project);
+            deploy.deploy(project, remote);
         }, error);
     },
-    rollbackProject: function(id, success, error) {
+    rollbackProject: function(id, remote, success, error) {
         module.exports.getProject(id, function(project){
             success();
-            deploy.rollback(project);
+            deploy.rollback(project, remote);
         }, error);
     },
     updateProject: function(id, data, success, error) {

@@ -73,7 +73,7 @@
         <select class="form-control" ng-model="deployFlow.remote">
             <option value="-1"></option>
             <option ng-repeat="remote in project.remotes" value="{{ remote.id }}">
-                {{ remote.name }}
+                {{ remote.name }} - {{ remote.branch }}
             </option>
         </select>
         <span class="input-group-btn">
@@ -112,7 +112,7 @@
         <select class="form-control" ng-model="rollbackFlow.remote">
             <option value="-1"></option>
             <option ng-repeat="remote in project.remotes" value="{{ remote.id }}">
-                {{ remote.name }}
+                {{ remote.name }} - {{ remote.branch }}
             </option>
         </select>
         <span class="input-group-btn">

@@ -15,8 +15,14 @@ angular.module('main').controller('projectDeploy',  ['$scope', 'project', '$sce'
 
     $scope.log('Sending deploy request;');
 
-    project.deploy({id: $scope.project._id}, {}, function(){
-        $scope.log('Request sent;');
-    });
+    for(var i in $scope.project.remotes) {
+        if($scope.project.remotes[i].id == $scope.deployFlow.remote) {
+            project.deploy({id: $scope.project._id}, $scope.project.remotes[i], function(){
+                $scope.log('Request sent;');
+            });
+        }
+    }
+
+
 
 }]);
