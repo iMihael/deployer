@@ -3,10 +3,16 @@ var ssh = require('../components/ssh');
 var git = require('../components/git');
 var tar = require('../components/tar');
 
+var exec = require('child_process').exec;
+
+//TODO: fix flow movement
+
 var project;
 var release;
 var flow;
 var remote;
+var releaseFolderConst = '{RELEASE_FOLDER}';
+var releaseFolder;
 
 var handleFlow = function(){
     if(flow.length > 0) {
@@ -14,10 +20,9 @@ var handleFlow = function(){
         if(step.hasOwnProperty('primary') && step.primary) {
             handlers.primary();
         } else if(step.hasOwnProperty('type')){
-            handlers[step.type]();
+            handlers[step.type](step);
         }
     } else {
-        //TODO: implement finish
 
         ssh.exec('rm -rf current && ln -s releases/' + release + " current", project.remote_path, function () {
             io.deployLog("Flow finished.");
@@ -32,8 +37,50 @@ var handleFlow = function(){
 };
 
 var handlers = {
-    local_command: function(){},
-    remote_command: function(){},
+    local_command: function(step){
+
+        var opts = {};
+        if(step.dir) {
+            opts = {
+                cwd: step.dir
+            };
+        }
+
+        io.deployLog('Executing local "' + step.name + '";');
+
+        exec(step.command, opts, function(error, stdout, stderr){
+            if(error) {
+                io.deployLog(error);
+            }
+
+            if(stdout != "") {
+                io.deployLog(stdout);
+            }
+            if(stderr != "") {
+                io.deployLog(stderr);
+            }
+            io.deployLog('Finished local "' + step.name + '";');
+
+            handleFlow();
+        });
+    },
+    remote_command: function(step){
+
+        //TODO: implement RELEASE_FOLDER
+        io.deployLog('Executing remote "' + step.name + '";');
+        var command = step.command;
+        var dir = step.dir ? step.dir : null;
+
+        command = command.replace(new RegExp(releaseFolderConst, 'g'), releaseFolder);
+        dir = dir.replace(new RegExp(releaseFolderConst, 'g'), releaseFolder);
+
+        ssh.exec(command, dir, function () {
+            io.deployLog('Finished remote "' + step.name + '";');
+
+            handleFlow();
+        });
+
+    },
     symlink: function(){},
     upload: function(){},
     primary: function(){
@@ -70,7 +117,6 @@ var handlers = {
                             io.deployLog(err);
                         });
 
-                        //TODO: add symlink on finish
                         //TODO: add releases clear
                         //TODO: add setting for releases count
                         //TODO: remove archive
@@ -101,8 +147,11 @@ module.exports = {
 
        remote = _remote;
        project = _project;
+
        release = Math.floor(Date.now() / 1000);
-       flow = project.deployFlow;
+       releaseFolder = project.remote_path + '/releases/' + release;
+
+       flow = project.deployFlow.reverse();
 
        io.deployLog('Starting to deploy;');
 
