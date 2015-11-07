@@ -61,7 +61,12 @@ module.exports = {
                 reader(stream);
             }
 
-            stream.end('cd '+pwd+';\n'+cmd+';\nexit;\n');
+            if(pwd) {
+                stream.end('cd ' + pwd + ';\n' + cmd + ';\nexit;\n');
+            } else {
+                stream.end(cmd + ';\nexit;\n');
+            }
+
             success();
         });
 

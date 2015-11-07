@@ -19,7 +19,7 @@
                 </li>
             </ul>
 
-            <label ng-show="project.symlinks && project.symlinks.length > 0">Uploads</label>
+            <label ng-show="project.symlinks && project.symlinks.length > 0">Symlinks</label>
             <ul class="list-group" dnd-allowed-types="[]" dnd-list="project.symlinks">
                 <li dnd-type="'symlink'" dnd-draggable="sm" dnd-effect-allowed="copy" class="list-group-item" ng-repeat="sm in project.symlinks">
                     <div ng-bind="sm.source"></div>
@@ -28,7 +28,7 @@
             </ul>
 
 
-            <label ng-show="project.uploads && project.uploads.length > 0">Symlinks</label>
+            <label ng-show="project.uploads && project.uploads.length > 0">Uploads</label>
             <ul class="list-group" dnd-allowed-types="[]" dnd-list="project.uploads">
                 <li dnd-type="'upload'" dnd-draggable="up" dnd-effect-allowed="copy" class="list-group-item" ng-repeat="up in project.uploads">
                     <div ng-bind="up.source"></div>
@@ -51,7 +51,7 @@
                 dnd-allowed-types="['local_command', 'deploy', 'remote_command', 'symlink', 'upload']" dnd-list="deployFlow.list" style="min-height: 200px;" >
                 <li dnd-disable-if="df.primary"
                     dnd-moved="deployFlow.list.splice($index, 1)" class="list-group-item"
-                    dnd-type="'deploy'" dnd-draggable="df" ng-repeat="df in deployFlow.list" ng-class="{'active': df.primary}">
+                    dnd-draggable="df" ng-repeat="df in deployFlow.list" ng-class="{'active': df.primary}">
 
                     <a ng-click="deployFlow.remove($index, df)" href="" ng-if="!df.primary" class="pull-right" style="margin-left:5px;"><span style="cursor: pointer;" class="glyphicon glyphicon-remove"></span></a>
                     <em class="pull-right" ng-bind="df.description"></em>

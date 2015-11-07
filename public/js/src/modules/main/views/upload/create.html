@@ -15,7 +15,7 @@
             <p>Add upload for files from local pc to remote server.</p>
             <form novalidate name="form" ng-submit="submit();">
                 <div class="form-group">
-                    <label>Source file or folder path</label>
+                    <label>Local source file or folder path</label>
                     <textarea name="source" ng-model="upload.source" class="form-control" ng-required="true" ></textarea>
                     <div class="help-block-error" ng-show="submitted && form.source.$error.required" >Source file or folder path is required.</div>
                 </div>
@@ -24,6 +24,7 @@
                     <label>Destination path on remote server</label>
                     <textarea name="destination" ng-model="upload.destination" class="form-control" ng-required="true" ></textarea>
                     <div class="help-block-error" ng-show="submitted && form.destination.$error.required" >Destination path on remote server is required.</div>
+                    <div class="help-block">You can type {RELEASE_FOLDER} to use latest release directory path, for example <i>{RELEASE_FOLDER}/vendor</i></div>
                 </div>
 
 
