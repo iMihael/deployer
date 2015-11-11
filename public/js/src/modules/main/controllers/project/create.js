@@ -1,6 +1,8 @@
 angular.module('main').controller('projectCreate',  ['$scope', 'project', '$location', 'growl', function($scope, project, $location, growl){
 
-    $scope.project = {};
+    $scope.project = {
+        systemKeys: true
+    };
 
     $scope.submitted = false;
     $scope.submit = function(){

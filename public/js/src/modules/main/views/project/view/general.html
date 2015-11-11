@@ -48,8 +48,11 @@
         </div>
         <div class="panel-body general-panel" >
             <ul dnd-drop="deployFlow.drop(item, type, index);" class="list-group"
-                dnd-allowed-types="['local_command', 'deploy', 'remote_command', 'symlink', 'upload']" dnd-list="deployFlow.list" style="min-height: 200px;" >
+                dnd-allowed-types="['local_command', 'deploy', 'remote_command', 'symlink', 'upload']"
+                dnd-list="deployFlow.list" style="min-height: 200px;" >
                 <li dnd-disable-if="df.primary"
+                    dnd-type="'deploy'"
+                    dnd-effect-allowed="move"
                     dnd-moved="deployFlow.list.splice($index, 1)" class="list-group-item"
                     dnd-draggable="df" ng-repeat="df in deployFlow.list" ng-class="{'active': df.primary}">
 

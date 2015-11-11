@@ -38,7 +38,7 @@ conn.on('ready', function() {
 
 
 module.exports = {
-    config: function(host, port, username, privateKey, projectPath){
+    config: function(host, port, username, privateKey, projectPath, passphrase){
         config = {
             host: host,
             port: port,
@@ -49,6 +49,10 @@ module.exports = {
                 //console.log(str);
             }
         };
+
+        if(passphrase) {
+            config['passphrase'] = passphrase;
+        }
     },
     exec: function(cmd, pwd, success, error, reader) {
         conn.shell(function(err, stream) {
@@ -71,17 +75,47 @@ module.exports = {
         });
 
     },
-    upload: function(sourcePath, dstPath, success, error) {
+    upload: function(sourcePath, dstPath, success, error, status) {
 
-        config.path = dstPath;
-
-        scpClient.scp(sourcePath, config, function(err){
+        _sftp.fastPut(sourcePath, dstPath, {
+            chunkSize: 32768,
+            step: function(total_transferred, chunk, total){
+                if(status) {
+                    var percent = total_transferred / total * 100;
+                    var strPercent = (Math.round(percent * 100) / 100) + " %";
+                    status(strPercent, percent);
+                }
+            }
+        }, function(err){
             if(!err) {
                 success();
             } else {
-                error();
+                error(err);
             }
-        })
+        });
+
+        //config.path = dstPath;
+
+        //var Client = scpClient.Client;
+
+        //scpClient.on('error', function(err){
+        //    console.log(err);
+        //});
+
+        //scpClient.on('transfer', function(buffer, uploaded, total){
+        //    console.log(uploaded, total, buffer);
+        //    if(status) {
+        //        status(uploaded / total * 100);
+        //    }
+        //});
+
+        //scpClient.scp(sourcePath, config, function(err){
+        //    if(!err) {
+        //        success();
+        //    } else {
+        //        error(err);
+        //    }
+        //})
     },
     onError: function(){
 

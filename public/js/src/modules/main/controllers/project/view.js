@@ -123,34 +123,39 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
                         animation: true,
                         templateUrl: viewPath + '/project/deploy.html',
                         scope: $scope,
-                        controller: 'projectDeploy'
+                        controller: 'projectDeploy',
+                        size: 'lg'
                     });
                 }
             },
             remote: '-1',
             drop: function(item, type, index){
 
-                if(type == 'local_command' ) {
-                    item.title = item.name;
-                    item.description = 'Local Command';
-                } else if(type == 'remote_command') {
-                    item.title = item.name;
-                    item.description = 'Remote Command';
-                } else if(type == 'symlink') {
-                    item.title = item.source + "\n" + item.destination;
-                    item.description = 'Symlink';
-                } else if(type == 'upload') {
-                    item.title = item.source + "\n" + item.destination;
-                    item.description = 'Upload';
+                if(type != "deploy") {
+
+                    if (type == 'local_command') {
+                        item.title = item.name;
+                        item.description = 'Local Command';
+                    } else if (type == 'remote_command') {
+                        item.title = item.name;
+                        item.description = 'Remote Command';
+                    } else if (type == 'symlink') {
+                        item.title = item.source + "\n" + item.destination;
+                        item.description = 'Symlink';
+                    } else if (type == 'upload') {
+                        item.title = item.source + "\n" + item.destination;
+                        item.description = 'Upload';
+                    }
+
+                    item.type = type;
+
                 }
 
-                item.type = type;
                 item.index = index;
 
                 project.update({id: $routeParams.id}, {
                     deployFlow: $scope.deployFlow.list
                 });
-
 
                 return item;
             },

@@ -14,9 +14,14 @@ var remote;
 var releaseFolderConst = '{RELEASE_FOLDER}';
 var releaseFolder;
 
+
+var replaceRelease = function(str){
+    return str.replace(new RegExp(releaseFolderConst, 'g'), releaseFolder);
+};
+
 var handleFlow = function(){
     if(flow.length > 0) {
-        var step = flow.pop();
+        var step = flow.shift();
         if(step.hasOwnProperty('primary') && step.primary) {
             handlers.primary();
         } else if(step.hasOwnProperty('type')){
@@ -66,13 +71,14 @@ var handlers = {
     },
     remote_command: function(step){
 
-        //TODO: implement RELEASE_FOLDER
         io.deployLog('Executing remote "' + step.name + '";');
-        var command = step.command;
+
+        var command = replaceRelease(step.command);
         var dir = step.dir ? step.dir : null;
 
-        command = command.replace(new RegExp(releaseFolderConst, 'g'), releaseFolder);
-        dir = dir.replace(new RegExp(releaseFolderConst, 'g'), releaseFolder);
+        if(dir) {
+            dir = replaceRelease(dir);
+        }
 
         ssh.exec(command, dir, function () {
             io.deployLog('Finished remote "' + step.name + '";');
@@ -80,9 +86,34 @@ var handlers = {
             handleFlow();
         });
 
+
     },
-    symlink: function(){},
-    upload: function(){},
+    symlink: function(step){
+        io.deployLog('Creating symlink "'+step.title+'";');
+
+        var destination = replaceRelease(step.destination);
+        var source = replaceRelease(step.source);
+
+        ssh.exec("rm -rf " + destination + " && ln -s " + source + " " + destination, null, function () {
+            io.deployLog('Symlink created;');
+
+            handleFlow();
+        });
+    },
+    upload: function(step){
+
+        io.deployLog('Uploading "' + step.title + '";');
+
+        var destination = replaceRelease(step.destination);
+        ssh.upload(step.source, destination, function () {
+            io.deployLog('Uploaded;');
+            handleFlow();
+        }, function(err){
+            io.deployLog(err);
+        }, function(percent){
+            io.deployLog(percent);
+        });
+    },
     primary: function(){
         io.deployLog('Cloning project;');
         git.clone(project.git_remote, project.private_key, project.public_key, project.passphrase, remote.branch, function (repo, path) {
@@ -96,7 +127,7 @@ var handlers = {
                 git.rmdir(path);
 
                 io.deployLog('Uploading archive;');
-                ssh.upload(archive, project.remote_path, function () {
+                ssh.upload(archive, project.remote_path + '/repo.tar', function () {
 
                     io.deployLog('Archive uploaded;');
 
@@ -124,12 +155,12 @@ var handlers = {
                     }, function (err) {
                         io.deployLog(err);
                     });
-                    //};
 
-                    //ssh.connect();
 
                 }, function (err) {
                     io.deployLog(err);
+                }, function(percent){
+                    io.deployLog(percent);
                 });
 
             }, function (err) {
@@ -151,16 +182,24 @@ module.exports = {
        release = Math.floor(Date.now() / 1000);
        releaseFolder = project.remote_path + '/releases/' + release;
 
-       flow = project.deployFlow.reverse();
+       flow = project.deployFlow;
 
        io.deployLog('Starting to deploy;');
+
+       var passphrase = null;
+       if(remote.project_keys && project.passphrase) {
+           passphrase = project.passphrase;
+       } else if(!remote.project_keys && remote.passphrase) {
+           passphrase = remote.passphrase;
+       }
 
        ssh.config(
            remote.host,
            remote.port,
            remote.username,
            remote.project_keys ? project.private_key : remote.private_key,
-           project.remote_path
+           project.remote_path,
+           passphrase
        );
 
        ssh.onError = function(err) {

@@ -4,7 +4,8 @@ angular.module('main').controller('projectDeploy',  ['$scope', 'project', '$sce'
     $scope.deployLog = '';
 
     $scope.log = function(str){
-        log += str + "<br /> \n";
+
+        log += str + (str.indexOf("%") == -1 ? "<br /> \n" : " ");
         $scope.deployLog = $sce.trustAsHtml(log);
     };
 
