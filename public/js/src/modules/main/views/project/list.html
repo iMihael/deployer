@@ -23,7 +23,7 @@
     <tbody>
         <tr ng-repeat="row in projects">
             <td>
-                {{ row.name }}
+                <a href="#/project/{{ row._id }}/general">{{ row.name }}</a>
             </td>
             <td>
                 <div class="btn-group" ng-show="!row.deleted">

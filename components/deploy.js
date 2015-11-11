@@ -30,13 +30,30 @@ var handleFlow = function(){
         }
     } else {
 
-        ssh.exec('rm -rf current && ln -s releases/' + release + " current", project.remote_path, function () {
-            io.deployLog("Flow finished.");
-        }, function(err) {
-            if(err) {
-                io.deployLog(err);
-            }
+
+        io.deployLog("Removing old releases;");
+        ssh.clearReleases(function(){
+
+            io.deployLog("Creating symlink to current release;");
+
+
+
+            ssh.exec('rm -rf current && ln -s releases/' + release + " current", project.remote_path, function () {
+
+                ssh.disconnect();
+
+                io.deployLog("Flow finished.");
+            }, function(err) {
+                if(err) {
+                    io.deployLog(err);
+                }
+            });
+
         });
+
+
+
+
 
     }
 

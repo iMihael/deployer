@@ -1,4 +1,3 @@
-var scpClient = require('scp2');
 var config = {};
 
 var Client = require('ssh2').Client;
@@ -36,8 +35,29 @@ conn.on('ready', function() {
 });
 
 
+var names = [];
+var removeName = function(success){
+    if(names.length > 5) {
+        var dir = names.shift();
+        conn.exec("rm -rf " + config.projectPath + '/releases/' + dir, function(){
+            removeName(success);
+        });
+    } else {
+        success();
+    }
+};
 
 module.exports = {
+    clearReleases: function(success){
+        _sftp.readdir(config.projectPath + '/releases', function(err, list) {
+            names = [];
+            for(var i in list) {
+                names.push(list[i].filename);
+            }
+            names = names.sort();
+            removeName(success);
+        });
+    },
     config: function(host, port, username, privateKey, projectPath, passphrase){
         config = {
             host: host,
@@ -94,28 +114,6 @@ module.exports = {
             }
         });
 
-        //config.path = dstPath;
-
-        //var Client = scpClient.Client;
-
-        //scpClient.on('error', function(err){
-        //    console.log(err);
-        //});
-
-        //scpClient.on('transfer', function(buffer, uploaded, total){
-        //    console.log(uploaded, total, buffer);
-        //    if(status) {
-        //        status(uploaded / total * 100);
-        //    }
-        //});
-
-        //scpClient.scp(sourcePath, config, function(err){
-        //    if(!err) {
-        //        success();
-        //    } else {
-        //        error(err);
-        //    }
-        //})
     },
     onError: function(){
 
