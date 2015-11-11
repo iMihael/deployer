@@ -23,20 +23,28 @@
             </div>
 
             <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="project.systemKeys"> Use system keys
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label>SSH public key</label>
-                <textarea class="form-control" name="public_key" ng-model="project.public_key" ng-required="true"></textarea>
+                <textarea class="form-control" ng-disabled="project.systemKeys" name="public_key" ng-model="project.public_key" ng-required="!project.systemKeys"></textarea>
                 <div class="help-block-error" ng-show="submitted && form.public_key.$error.required" >Public key is required.</div>
             </div>
 
             <div class="form-group">
                 <label>SSH private key</label>
-                <textarea class="form-control" name="private_key" ng-model="project.private_key" ng-required="true"></textarea>
+                <textarea class="form-control" ng-disabled="project.systemKeys" name="private_key" ng-model="project.private_key" ng-required="!project.systemKeys"></textarea>
                 <div class="help-block-error" ng-show="submitted && form.private_key.$error.required" >Private key is required.</div>
             </div>
 
             <div class="form-group">
                 <label>Key passphrase (optional)</label>
-                <input type="text" class="form-control" ng-model="project.passphrase" name="passphrase" />
+                <input ng-disabled="project.systemKeys" type="text" class="form-control" ng-model="project.passphrase" name="passphrase" />
             </div>
 
             <div class="form-group">

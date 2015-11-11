@@ -12,7 +12,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         $scope.deployFlow.list = data.deployFlow;
         $scope.rollbackFlow.list = data.rollbackFlow;
 
-        if(data.remotes.length == 1) {
+        if(data.hasOwnProperty('remotes') && data.remotes.length == 1) {
             $scope.deployFlow.remote = data.remotes[0].id;
             $scope.rollbackFlow.remote = data.remotes[0].id;
         }
@@ -20,6 +20,7 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
 
         $scope.submitted = false;
         $scope.update = function(form){
+
             $scope.submitted = true;
             if(form.$valid) {
                 project.update({id: $routeParams.id}, {
@@ -28,7 +29,8 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
                     public_key: $scope.project.public_key,
                     private_key: $scope.project.private_key,
                     remote_path: $scope.project.remote_path,
-                    passphrase: $scope.project.passphrase
+                    passphrase: $scope.project.passphrase,
+                    systemKeys: $scope.project.systemKeys
                 }, function(){
                     growl.success('Project successfully updated.');
                 });

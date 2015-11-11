@@ -2,6 +2,7 @@ var io = require('../components/io');
 var ssh = require('../components/ssh');
 var git = require('../components/git');
 var tar = require('../components/tar');
+var fs = require('fs');
 
 var exec = require('child_process').exec;
 
@@ -116,7 +117,19 @@ var handlers = {
     },
     primary: function(){
         io.deployLog('Cloning project;');
-        git.clone(project.git_remote, project.private_key, project.public_key, project.passphrase, remote.branch, function (repo, path) {
+
+        var publicKey, privateKey;
+
+        if(project.hasOwnProperty('systemKeys') && project.systemKeys) {
+            var home = process.env.HOME;
+            privateKey = fs.readFileSync(home + '/.ssh/id_rsa');
+            publicKey = fs.readFileSync(home + '/.ssh/id_rsa.pub');
+        } else {
+            privateKey = project.private_key;
+            publicKey = project.public_key;
+        }
+
+        git.clone(project.git_remote, privateKey, publicKey, project.passphrase, remote.branch, function (repo, path) {
             io.deployLog('Project cloned;');
 
             io.deployLog('Creating archive;');
@@ -193,11 +206,23 @@ module.exports = {
            passphrase = remote.passphrase;
        }
 
+       var privateKey;
+       if(remote.project_keys && project.hasOwnProperty('systemKeys') && project.systemKeys) {
+           var home = process.env.HOME;
+           var keyPath = home + '/.ssh/id_rsa';
+           privateKey = fs.readFileSync(keyPath);
+            //get system key
+       } else if(remote.project_keys && project.private_key) {
+           privateKey = project.private_key;
+       } else {
+           privateKey = remote.private_key;
+       }
+
        ssh.config(
            remote.host,
            remote.port,
            remote.username,
-           remote.project_keys ? project.private_key : remote.private_key,
+           privateKey,
            project.remote_path,
            passphrase
        );

@@ -6,13 +6,13 @@
 
 
         <ul class="nav nav-tabs" >
-            <li ng-class="{'active': activeTab == 'general'}" ng-click="activeTab = 'general'"><a href="">General</a></li>
-            <li ng-class="{'active': activeTab == 'remotes'}" ng-click="activeTab = 'remotes'"><a href="">Remote Servers</a></li>
-            <li ng-class="{'active': activeTab == 'local_commands'}" ng-click="activeTab = 'local_commands'"><a href="">Local Commands</a></li>
-            <li ng-class="{'active': activeTab == 'remote_commands'}" ng-click="activeTab = 'remote_commands'"><a href="">Remote Commands</a></li>
-            <li ng-class="{'active': activeTab == 'symlinks'}"  ng-click="activeTab = 'symlinks'"><a href="">Remote Symlinks</a></li>
-            <li ng-class="{'active': activeTab == 'uploads'}"  ng-click="activeTab = 'uploads'"><a href="">Uploads</a></li>
-            <li ng-class="{'active': activeTab == 'config'}"  ng-click="activeTab = 'config'"><a href="">Project Config</a></li>
+            <li ng-class="{'active': activeTab == 'general'}" ><a href="#/project/{{ project._id }}/general">General</a></li>
+            <li ng-class="{'active': activeTab == 'remotes'}" ><a href="#/project/{{ project._id }}/remotes">Remote Servers</a></li>
+            <li ng-class="{'active': activeTab == 'local_commands'}" ><a href="#/project/{{ project._id }}/local_commands">Local Commands</a></li>
+            <li ng-class="{'active': activeTab == 'remote_commands'}" ><a href="#/project/{{ project._id }}/remote_commands">Remote Commands</a></li>
+            <li ng-class="{'active': activeTab == 'symlinks'}"  ><a href="#/project/{{ project._id }}/symlinks">Remote Symlinks</a></li>
+            <li ng-class="{'active': activeTab == 'uploads'}"  ><a href="#/project/{{ project._id }}/uploads">Uploads</a></li>
+            <li ng-class="{'active': activeTab == 'config'}"  ><a href="#/project/{{ project._id }}/config">Project Config</a></li>
         </ul>
 
         <div style="padding-top:10px;">
