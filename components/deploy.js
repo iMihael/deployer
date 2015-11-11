@@ -6,10 +6,9 @@ var fs = require('fs');
 
 var exec = require('child_process').exec;
 
-//TODO: fix flow movement
-
 var project;
 var release;
+var flowType;
 var flow;
 var remote;
 var releaseFolderConst = '{RELEASE_FOLDER}';
@@ -23,9 +22,12 @@ var replaceRelease = function(str){
 var handleFlow = function(){
     if(flow.length > 0) {
         var step = flow.shift();
-        if(step.hasOwnProperty('primary') && step.primary) {
-            handlers.primary();
-        } else if(step.hasOwnProperty('type')){
+        if(step.hasOwnProperty('primary') && step.primary && flowType == 'deploy') {
+            handlers.primaryDeploy();
+        } else if(step.hasOwnProperty('primary') && step.primary && flowType == 'rollback'){
+            handlers.primaryRollback();
+        }
+        else if(step.hasOwnProperty('type')){
             handlers[step.type](step);
         }
     } else {
@@ -50,13 +52,7 @@ var handleFlow = function(){
             });
 
         });
-
-
-
-
-
     }
-
 };
 
 var handlers = {
@@ -103,8 +99,6 @@ var handlers = {
 
             handleFlow();
         });
-
-
     },
     symlink: function(step){
         io.deployLog('Creating symlink "'+step.title+'";');
@@ -132,7 +126,11 @@ var handlers = {
             io.deployLog(percent);
         });
     },
-    primary: function(){
+    primaryRollback: function(){
+        io.deployLog('Going to previous release;');
+        ssh.toPrevRelease();
+    },
+    primaryDeploy: function(){
         io.deployLog('Cloning project;');
 
         var publicKey, privateKey;
@@ -178,9 +176,7 @@ var handlers = {
                             io.deployLog(err);
                         });
 
-                        //TODO: add releases clear
                         //TODO: add setting for releases count
-                        //TODO: remove archive
 
                     }, function (err) {
                         io.deployLog(err);
@@ -206,6 +202,7 @@ var handlers = {
 module.exports = {
    deploy: function(_project, _remote){
 
+       flowType = 'deploy';
        remote = _remote;
        project = _project;
 
@@ -255,7 +252,12 @@ module.exports = {
        }
 
    },
-   rollback: function(project){
+   rollback: function(_project, _remote){
 
+       flowType = 'rollback';
+       remote = _remote;
+       project = _project;
+
+       flow = project.rollbackFlow;
    }
 };
