@@ -180,7 +180,15 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         $scope.rollbackFlow = {
             rollback: function(){
                 if($scope.rollbackFlow.remote != '-1') {
-                    console.log('sss');
+                    if($scope.rollbackFlow.remote != '-1') {
+                        $modal.open({
+                            animation: true,
+                            templateUrl: viewPath + '/project/rollback.html',
+                            scope: $scope,
+                            controller: 'projectRollback',
+                            size: 'lg'
+                        });
+                    }
                 }
             },
             remote: '-1',

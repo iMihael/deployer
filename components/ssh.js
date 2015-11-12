@@ -29,9 +29,11 @@ conn.on('ready', function() {
                 }
             });
         }
+
+        module.exports.onReady();
     });
 
-    module.exports.onReady();
+
 });
 
 
@@ -95,13 +97,19 @@ module.exports = {
                 reader(stream);
             }
 
+            stream.on('close', function(code, signal) {
+                success();
+            });
+
             if(pwd) {
                 stream.end('cd ' + pwd + ';\n' + cmd + ';\nexit;\n');
             } else {
                 stream.end(cmd + ';\nexit;\n');
             }
 
-            success();
+
+
+            //success();
         });
 
     },

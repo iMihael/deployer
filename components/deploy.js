@@ -199,6 +199,47 @@ var handlers = {
     }
 };
 
+var sshConnect = function(project, remote){
+    var passphrase = null;
+    if(remote.project_keys && project.passphrase) {
+        passphrase = project.passphrase;
+    } else if(!remote.project_keys && remote.passphrase) {
+        passphrase = remote.passphrase;
+    }
+
+    var privateKey;
+
+    if(remote.project_keys && project.hasOwnProperty('systemKeys') && project.systemKeys) {
+        var home = process.env.HOME;
+        var keyPath = home + '/.ssh/id_rsa';
+        privateKey = fs.readFileSync(keyPath);
+        //get system key
+    } else if(remote.project_keys && project.private_key) {
+        privateKey = project.private_key;
+    } else {
+        privateKey = remote.private_key;
+    }
+
+    ssh.config(
+        remote.host,
+        remote.port,
+        remote.username,
+        privateKey,
+        project.remote_path,
+        passphrase
+    );
+
+    ssh.onError = function(err) {
+        io.deployLog(err);
+    };
+
+    ssh.connect();
+
+    ssh.onReady = function() {
+        handleFlow();
+    }
+};
+
 module.exports = {
    deploy: function(_project, _remote){
 
@@ -212,6 +253,8 @@ module.exports = {
        flow = project.deployFlow;
 
        io.deployLog('Starting to deploy;');
+
+       //sshConnect(project, remote);
 
        var passphrase = null;
        if(remote.project_keys && project.passphrase) {
@@ -259,5 +302,9 @@ module.exports = {
        project = _project;
 
        flow = project.rollbackFlow;
+
+       io.deployLog('Starting to deploy;');
+
+       sshConnect(project, remote);
    }
 };
