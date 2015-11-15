@@ -24,7 +24,11 @@ var rmdir = function(dir) {
 
 module.exports = {
     rmdir: rmdir,
-    clone: function(cloneUrl, privateKey, publicKey, passphrase, branch, success, error){
+    clone: function(cloneUrl, privateKey, publicKey, passphrase, branch, success, error, progress){
+
+        if(!passphrase) {
+            passphrase = '';
+        }
 
         //TODO: move to config
 
@@ -58,6 +62,17 @@ module.exports = {
                             privateKeyPath,
                             passphrase
                         );
+                    },
+                    transferProgress: function(proc){
+
+                        var io = proc.indexedObjects();
+                        var to = proc.totalObjects();
+
+                        if(progress) {
+                            var percent = io / to * 100;
+                            var strPercent = (Math.round(percent * 100) / 100) + " %";
+                            progress(strPercent, percent);
+                        }
                     }
                 }
             },

@@ -50,14 +50,14 @@ var removeName = function(success){
 };
 
 module.exports = {
-    toPrevRelease: function(){
+    getPrevReleaseFolder: function(success){
         _sftp.readdir(config.projectPath + '/releases', function(err, list) {
             names = [];
             for (var i in list) {
                 names.push(list[i].filename);
             }
             names = names.sort().reverse();
-            console.log(names);
+            success(names[1]);
         });
     },
     clearReleases: function(success){

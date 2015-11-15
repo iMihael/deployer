@@ -9,8 +9,23 @@ angular.module('main').controller('projectView',  ['$scope', 'project', '$locati
         id: $routeParams.id
     }, function(data){
         $scope.project = data;
-        $scope.deployFlow.list = data.deployFlow;
-        $scope.rollbackFlow.list = data.rollbackFlow;
+
+
+        if(data.hasOwnProperty('deployFlow')) {
+            $scope.deployFlow.list = data.deployFlow;
+        } else {
+            project.update({id: $routeParams.id}, {
+                deployFlow: $scope.deployFlow.list
+            });
+        }
+
+        if(data.hasOwnProperty('rollbackFlow')) {
+            $scope.rollbackFlow.list = data.rollbackFlow;
+        } else {
+            project.update({id: $routeParams.id}, {
+                rollbackFlow: $scope.rollbackFlow.list
+            });
+        }
 
         if(data.hasOwnProperty('remotes') && data.remotes.length == 1) {
             $scope.deployFlow.remote = data.remotes[0].id;

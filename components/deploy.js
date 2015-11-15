@@ -128,7 +128,7 @@ var handlers = {
     },
     primaryRollback: function(){
         io.deployLog('Going to previous release;');
-        ssh.toPrevRelease();
+        //ssh.toPrevRelease();
     },
     primaryDeploy: function(){
         io.deployLog('Cloning project;');
@@ -190,11 +190,13 @@ var handlers = {
                 });
 
             }, function (err) {
-                console.log(err);
+                io.deployLog(err);
             });
 
         }, function (err) {
             io.deployLog(err);
+        }, function(percent){
+            io.deployLog(percent);
         });
     }
 };
@@ -236,6 +238,9 @@ var sshConnect = function(project, remote){
     ssh.connect();
 
     ssh.onReady = function() {
+
+        //if(flowType == 'rollback')
+        //TODO: add getting for previous release
         handleFlow();
     }
 };
@@ -254,45 +259,45 @@ module.exports = {
 
        io.deployLog('Starting to deploy;');
 
-       //sshConnect(project, remote);
+       sshConnect(project, remote);
 
-       var passphrase = null;
-       if(remote.project_keys && project.passphrase) {
-           passphrase = project.passphrase;
-       } else if(!remote.project_keys && remote.passphrase) {
-           passphrase = remote.passphrase;
-       }
-
-       var privateKey;
-       if(remote.project_keys && project.hasOwnProperty('systemKeys') && project.systemKeys) {
-           var home = process.env.HOME;
-           var keyPath = home + '/.ssh/id_rsa';
-           privateKey = fs.readFileSync(keyPath);
-            //get system key
-       } else if(remote.project_keys && project.private_key) {
-           privateKey = project.private_key;
-       } else {
-           privateKey = remote.private_key;
-       }
-
-       ssh.config(
-           remote.host,
-           remote.port,
-           remote.username,
-           privateKey,
-           project.remote_path,
-           passphrase
-       );
-
-       ssh.onError = function(err) {
-           io.deployLog(err);
-       };
-
-       ssh.connect();
-
-       ssh.onReady = function() {
-           handleFlow();
-       }
+       //var passphrase = null;
+       //if(remote.project_keys && project.passphrase) {
+       //    passphrase = project.passphrase;
+       //} else if(!remote.project_keys && remote.passphrase) {
+       //    passphrase = remote.passphrase;
+       //}
+       //
+       //var privateKey;
+       //if(remote.project_keys && project.hasOwnProperty('systemKeys') && project.systemKeys) {
+       //    var home = process.env.HOME;
+       //    var keyPath = home + '/.ssh/id_rsa';
+       //    privateKey = fs.readFileSync(keyPath);
+       //     //get system key
+       //} else if(remote.project_keys && project.private_key) {
+       //    privateKey = project.private_key;
+       //} else {
+       //    privateKey = remote.private_key;
+       //}
+       //
+       //ssh.config(
+       //    remote.host,
+       //    remote.port,
+       //    remote.username,
+       //    privateKey,
+       //    project.remote_path,
+       //    passphrase
+       //);
+       //
+       //ssh.onError = function(err) {
+       //    io.deployLog(err);
+       //};
+       //
+       //ssh.connect();
+       //
+       //ssh.onReady = function() {
+       //    handleFlow();
+       //}
 
    },
    rollback: function(_project, _remote){
