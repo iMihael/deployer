@@ -51,13 +51,29 @@ var removeName = function(success){
 
 module.exports = {
     getPrevReleaseFolder: function(success){
-        _sftp.readdir(config.projectPath + '/releases', function(err, list) {
-            names = [];
-            for (var i in list) {
-                names.push(list[i].filename);
+        _sftp.readlink(config.projectPath + '/current', function(err, target) {
+
+            if(!err) {
+
+                target = target.substr(target.indexOf("/") + 1);
+
+                _sftp.readdir(config.projectPath + '/releases', function (err, list) {
+                    names = [];
+                    for (var i in list) {
+                        names.push(list[i].filename);
+                    }
+                    names = names.sort().reverse();
+
+                    for(var i in names) {
+                        if(names[i] == target) {
+                            success(names[parseInt(i) + 1]);
+                            return;
+                        }
+                    }
+
+                    //success(names[1]);
+                });
             }
-            names = names.sort().reverse();
-            success(names[1]);
         });
     },
     clearReleases: function(success){

@@ -9,7 +9,7 @@ angular.module('main').controller('projectRollback',  ['$scope', 'project', '$sc
         $scope.rollbackLog = $sce.trustAsHtml(log);
     };
 
-    window.socket.on('rollback', function(data){
+    window.socket.on('deploy', function(data){
         $scope.log(data);
         $scope.$apply();
     });

@@ -127,7 +127,8 @@ var handlers = {
         });
     },
     primaryRollback: function(){
-        io.deployLog('Going to previous release;');
+        io.deployLog('Going to previous release "'+ release +'";');
+        handleFlow();
         //ssh.toPrevRelease();
     },
     primaryDeploy: function(){
@@ -201,7 +202,7 @@ var handlers = {
     }
 };
 
-var sshConnect = function(project, remote){
+var sshConnect = function(project, remote, success){
     var passphrase = null;
     if(remote.project_keys && project.passphrase) {
         passphrase = project.passphrase;
@@ -238,10 +239,7 @@ var sshConnect = function(project, remote){
     ssh.connect();
 
     ssh.onReady = function() {
-
-        //if(flowType == 'rollback')
-        //TODO: add getting for previous release
-        handleFlow();
+        success();
     }
 };
 
@@ -259,45 +257,9 @@ module.exports = {
 
        io.deployLog('Starting to deploy;');
 
-       sshConnect(project, remote);
-
-       //var passphrase = null;
-       //if(remote.project_keys && project.passphrase) {
-       //    passphrase = project.passphrase;
-       //} else if(!remote.project_keys && remote.passphrase) {
-       //    passphrase = remote.passphrase;
-       //}
-       //
-       //var privateKey;
-       //if(remote.project_keys && project.hasOwnProperty('systemKeys') && project.systemKeys) {
-       //    var home = process.env.HOME;
-       //    var keyPath = home + '/.ssh/id_rsa';
-       //    privateKey = fs.readFileSync(keyPath);
-       //     //get system key
-       //} else if(remote.project_keys && project.private_key) {
-       //    privateKey = project.private_key;
-       //} else {
-       //    privateKey = remote.private_key;
-       //}
-       //
-       //ssh.config(
-       //    remote.host,
-       //    remote.port,
-       //    remote.username,
-       //    privateKey,
-       //    project.remote_path,
-       //    passphrase
-       //);
-       //
-       //ssh.onError = function(err) {
-       //    io.deployLog(err);
-       //};
-       //
-       //ssh.connect();
-       //
-       //ssh.onReady = function() {
-       //    handleFlow();
-       //}
+       sshConnect(project, remote, function(){
+           handleFlow();
+       });
 
    },
    rollback: function(_project, _remote){
@@ -308,8 +270,13 @@ module.exports = {
 
        flow = project.rollbackFlow;
 
-       io.deployLog('Starting to deploy;');
+       io.deployLog('Starting to rollback;');
 
-       sshConnect(project, remote);
+       sshConnect(project, remote, function(){
+           ssh.getPrevReleaseFolder(function(_release){
+               release = _release;
+               handleFlow();
+           });
+       });
    }
 };
