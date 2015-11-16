@@ -1,5 +1,4 @@
 var p = require('../db/project');
-var ssh = require('../components/ssh');
 
 module.exports = {
     getAll: function(req, res) {
@@ -28,9 +27,6 @@ module.exports = {
     getOne: function(req, res) {
         p.getProject(req.params.id, function(doc){
             res.json(doc);
-
-
-
         }, function(err){
             res.status(422);
             res.json(err);
