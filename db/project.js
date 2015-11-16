@@ -47,12 +47,14 @@ module.exports = {
             }
         });
     },
-    addProject: function(project, callback) {
+    addProject: function(project, callback, error) {
         m.db().collection('projects').insertOne(project, function(err, result){
             if(!err && result.ops && result.ops.length == 1) {
                 if(callback) {
                     callback(result.ops[0]);
                 }
+            } else if(err && error) {
+                error(err);
             }
         });
     },
@@ -70,9 +72,15 @@ module.exports = {
             error(err);
         });
     },
-    deleteProject: function(id, callback) {
+    deleteProject: function(id, callback, error) {
         var id = new mongo.ObjectID(id);
-        m.db().collection('projects').updateOne({_id: id}, {$set: {deletedAt: new Date()}}, callback);
+        m.db().collection('projects').updateOne({_id: id}, {$set: {deletedAt: new Date()}}, function(err){
+            if(!err) {
+                callback();
+            } else if(err && error) {
+                error(err);
+            }
+        });
     },
     restoreProject: function(id, callback) {
         var id = new mongo.ObjectID(id);

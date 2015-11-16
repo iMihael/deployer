@@ -1,4 +1,4 @@
-angular.module('main').controller('projectList',  ['$scope', 'project', 'growl', function($scope, project){
+angular.module('main').controller('projectList',  ['$scope', 'project', '$modal', 'viewPath', function($scope, project, $modal, viewPath){
 
 
     project.query({}, {}, function(data){
@@ -29,6 +29,7 @@ angular.module('main').controller('projectList',  ['$scope', 'project', 'growl',
                 selected.push($scope.projects[i]);
             }
         }
+
         if(selected.length > 0) {
             var json = JSON.stringify(selected);
             var blob = new Blob([json], {type: "application/json"});
@@ -40,7 +41,13 @@ angular.module('main').controller('projectList',  ['$scope', 'project', 'growl',
     };
 
     $scope.import = function(){
-        console.log('ss');
+        $modal.open({
+            animation: true,
+            templateUrl: viewPath + '/project/import.html',
+            scope: $scope,
+            controller: 'import',
+            size: 'lg'
+        });
     };
 
 }]);

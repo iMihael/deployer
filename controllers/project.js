@@ -20,6 +20,9 @@ module.exports = {
         var project = req.body;
         p.addProject(project, function(data){
             res.json(data);
+        }, function(error){
+            res.status(422);
+            res.json(error);
         });
     },
     getOne: function(req, res) {
@@ -43,6 +46,9 @@ module.exports = {
         p.deleteProject(req.params.id, function(){
             res.status(204);
             res.end();
+        }, function(err){
+            res.status(422);
+            res.json(err);
         });
     },
     deploy: function(req, res) {
