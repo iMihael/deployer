@@ -1,6 +1,9 @@
 angular.module('main', ['ngRoute', 'ngResource', 'ui.bootstrap'])
-    .config(['$routeProvider', 'viewPath', function($routeProvider, viewPath){
+    .config(['$routeProvider', 'viewPath', '$compileProvider', function($routeProvider, viewPath, $compileProvider){
 
+        //var oldWhiteList = $compileProvider.aHrefSanitizationWhitelist();
+        //console.log(oldWhiteList);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
         //var viewPath = 'js/src/modules/main/views/';
 
         $routeProvider

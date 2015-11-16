@@ -6,11 +6,17 @@
 <!--<h2>Projects</h2>-->
 <p>
     <a class="btn btn-primary" href="#/projects/create">Create Project</a>
+
+    <span class="btn-group">
+        <a ng-click="import()" href="" class="btn btn-default">Import</a>
+        <a target="_blank" download="export.json" href="{{ exportHref }}" ng-disabled="!exportHref" class="btn btn-default">Export</a>
+    </span>
 </p>
 
 <table class="table table-bordered" ng-if="projects">
     <thead>
         <tr>
+            <th></th>
             <th>
                 Name
             </th>
@@ -22,6 +28,9 @@
 
     <tbody>
         <tr ng-repeat="row in projects">
+            <td>
+                <input type="checkbox" ng-click="rowClick(row)" />
+            </td>
             <td>
                 <a href="#/project/{{ row._id }}/general">{{ row.name }}</a>
             </td>
