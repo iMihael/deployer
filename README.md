@@ -8,9 +8,10 @@ You must have ssh access to deployment server to use this app.
 
 Instalation process
 ======================
-- Install and run mongodb server, and config it in config.json  
+- Install and run mongodb server
 - Install npm and bower globally
 - Clone this git repository
+- Config mongodb access in config.json file
 - run `npm install`
 - cd public/js and run `bower install`
 - cd to project root and run `npm start`
